@@ -6,5 +6,9 @@
   background: #0c0c0b;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   box-sizing: border-box;
-  cursor: none;
+  transition: background 0.3s ease;
+}
+
+.stage--lights-on {
+  background: #ffffff;
 }

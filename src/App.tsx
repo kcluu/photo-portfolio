@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
 import { TopBar } from "./components/TopBar/TopBar";
-import { CategoryTabs } from "./components/CategoryTabs/CategoryTabs";
 import { ContactSheet } from "./components/ContactSheet/ContactSheet";
 import { Lightbox } from "./components/Lightbox/Lightbox";
 import { ViewfinderCursor } from "./components/ViewfinderCursor/ViewfinderCursor";
@@ -16,7 +15,7 @@ import "./App.css";
 
 const ACCENT_COLOR = "#e2b33c";
 const GRID_GAP = 3;
-const GRID_TOP_OFFSET = 90;
+const GRID_TOP_OFFSET = 52;
 const TOTAL_PHOTOS = 60;
 const CATEGORIES: CategoryFilter[] = ["all", "concert", "portrait", "postcard", "editorial"];
 
@@ -25,6 +24,8 @@ const ALL_PHOTOS = createPhotoPool(TOTAL_PHOTOS);
 export const App = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [lightsOn, setLightsOn] = useState(false);
+  const [isOverGrid, setIsOverGrid] = useState(false);
 
   const { ref: stageRef, size: stageSize } = useElementSize<HTMLDivElement>();
   const { ref: sheetRef, size: sheetSize } = useElementSize<HTMLDivElement>();
@@ -67,17 +68,17 @@ export const App = () => {
   const originRect = lightbox.selectedIndex !== null ? rects[lightbox.selectedIndex] ?? null : null;
 
   return (
-    <div className="stage" ref={stageRef} onMouseMove={onMouseMove}>
+    <div className={`stage ${lightsOn ? "stage--lights-on" : ""}`} ref={stageRef} onMouseMove={onMouseMove}>
       <LoadingScreen accentColor={ACCENT_COLOR} />
 
-      <TopBar siteName="R. Matsuda" />
-
-      <CategoryTabs
+      <TopBar
+        siteName="(Katelyn Luu)"
+        lightsOn={lightsOn}
+        onToggleLights={() => setLightsOn((prev) => !prev)}
         categories={CATEGORIES}
-        labels={CATEGORY_LABELS}
+        categoryLabels={CATEGORY_LABELS}
         activeCategory={activeCategory}
-        accentColor={ACCENT_COLOR}
-        onSelect={handleSelectCategory}
+        onSelectCategory={handleSelectCategory}
       />
 
       <ContactSheet
@@ -88,10 +89,13 @@ export const App = () => {
         rows={rows}
         gap={GRID_GAP}
         hoveredIndex={hoveredIndex}
+        lightsOn={lightsOn}
         filmStockLabel={FILM_STOCK_LABELS[activeCategory]}
         onHoverStart={setHoveredIndex}
         onHoverEnd={() => setHoveredIndex(null)}
         onSelect={lightbox.open}
+        onGridEnter={() => setIsOverGrid(true)}
+        onGridLeave={() => setIsOverGrid(false)}
       />
 
       <Tooltip
@@ -114,7 +118,9 @@ export const App = () => {
         onPrevious={lightbox.showPrevious}
       />
 
-      <ViewfinderCursor x={cursorPosition.x} y={cursorPosition.y} accentColor={ACCENT_COLOR} />
+      {(isOverGrid || selectedPhoto !== null) && (
+        <ViewfinderCursor x={cursorPosition.x} y={cursorPosition.y} accentColor={ACCENT_COLOR} />
+      )}
     </div>
   );
 };

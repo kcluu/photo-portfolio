@@ -1,9 +1,10 @@
 .contact-sheet {
   position: absolute;
-  top: 90px;
+  top: 52px;
   left: 0;
   right: 0;
   bottom: 36px;
+  cursor: none;
 }
 
 .contact-sheet__grid {
@@ -11,6 +12,11 @@
   height: 100%;
   display: grid;
   background: #000;
+  transition: background 0.3s ease;
+}
+
+.contact-sheet__grid--lit {
+  background: #ffffff;
 }
 
 .contact-sheet__sprocket {
@@ -23,7 +29,7 @@
 }
 
 .contact-sheet__sprocket--top {
-  top: 84px;
+  top: 46px;
 }
 
 .contact-sheet__sprocket--bottom {
@@ -40,4 +46,8 @@
   font-size: 9.5px;
   letter-spacing: 0.14em;
   color: #8c887f;
+}
+
+.stage--lights-on .contact-sheet__slate {
+  color: #56534c;
 }

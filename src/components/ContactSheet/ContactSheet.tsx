@@ -11,10 +11,13 @@ interface ContactSheetProps {
   rows: number;
   gap: number;
   hoveredIndex: number | null;
+  lightsOn: boolean;
   filmStockLabel: string;
   onHoverStart: (index: number) => void;
   onHoverEnd: () => void;
   onSelect: (index: number) => void;
+  onGridEnter: () => void;
+  onGridLeave: () => void;
 }
 
 export const ContactSheet = ({
@@ -25,17 +28,20 @@ export const ContactSheet = ({
   rows,
   gap,
   hoveredIndex,
+  lightsOn,
   filmStockLabel,
   onHoverStart,
   onHoverEnd,
   onSelect,
+  onGridEnter,
+  onGridLeave,
 }: ContactSheetProps) => (
   <>
     <div className="contact-sheet__sprocket contact-sheet__sprocket--top" />
 
-    <div className="contact-sheet" ref={containerRef}>
+    <div className="contact-sheet" ref={containerRef} onMouseEnter={onGridEnter} onMouseLeave={onGridLeave}>
       <div
-        className="contact-sheet__grid"
+        className={`contact-sheet__grid ${lightsOn ? "contact-sheet__grid--lit" : ""}`}
         style={{
           gridTemplateColumns: `repeat(${columns}, 1fr)`,
           gridTemplateRows: `repeat(${rows}, 1fr)`,
@@ -47,7 +53,7 @@ export const ContactSheet = ({
             key={photo.id}
             photo={photo}
             columnSpan={spans[index] ?? 1}
-            isDimmed={hoveredIndex !== null && hoveredIndex !== index}
+            isDimmed={!lightsOn && hoveredIndex !== null && hoveredIndex !== index}
             isHighlighted={hoveredIndex === index}
             onHoverStart={() => onHoverStart(index)}
             onHoverEnd={onHoverEnd}

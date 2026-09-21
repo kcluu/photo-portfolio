@@ -42,7 +42,7 @@ export const CATEGORY_LABELS: Record<Photo["category"] | "all", string> = {
   all: "All",
   concert: "Concerts",
   portrait: "Portraits",
-  postcard: "Postcard",
+  postcard: "Postcards",
   editorial: "Editorial",
 };
 
