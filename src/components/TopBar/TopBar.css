@@ -13,7 +13,7 @@
   z-index: 20;
 }
 
-.top-bar__name {
+.top-bar-name {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
   color: #d6d5d1;
@@ -22,7 +22,7 @@
   flex: 0 0 auto;
 }
 
-.top-bar__categories {
+.top-bar-categories {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -31,7 +31,7 @@
   flex: 1 1 auto;
 }
 
-.top-bar__category-tab {
+.top-bar-category-tab {
   position: relative;
   appearance: none;
   background: none;
@@ -47,25 +47,25 @@
   transition: color 0.3s ease;
 }
 
-.stage--lights-on .top-bar__category-tab {
+.stage-lights-on .top-bar-category-tab {
   color: #56534c;
 }
 
-.top-bar__category-paren {
+.top-bar-category-paren {
   opacity: 0;
   color: inherit;
   transition: opacity 0.2s ease;
 }
 
-.top-bar__category-tab:not(.top-bar__category-tab--active):hover .top-bar__category-paren {
+.top-bar-category-tab:not(.top-bar-category-tab-active):hover .top-bar-category-paren {
   opacity: 0.4;
 }
 
-.top-bar__category-tab--active .top-bar__category-paren {
+.top-bar-category-tab-active .top-bar-category-paren {
   opacity: 1;
 }
 
-.top-bar__nav {
+.top-bar-nav {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -73,8 +73,12 @@
   flex: 0 0 auto;
 }
 
-.top-bar__link {
+.top-bar-link {
   position: relative;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 10.5px;
   letter-spacing: 0.12em;
@@ -82,19 +86,20 @@
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.top-bar__link-paren {
+.top-bar-link-paren {
   opacity: 0;
   color: inherit;
   transition: opacity 0.2s ease;
 }
 
-.top-bar__link:hover .top-bar__link-paren {
+.top-bar-link:hover .top-bar-link-paren {
   opacity: 0.4;
 }
 
-.top-bar__light-switch {
+.top-bar-light-switch {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,47 +111,47 @@
   transition: color 0.3s ease, filter 0.3s ease;
 }
 
-.top-bar__light-switch-icon {
+.top-bar-light-switch-icon {
   display: block;
 }
 
-.top-bar__light-switch--on {
+.top-bar-light-switch-on {
   color: #e2b33c;
   filter: drop-shadow(0 0 6px rgba(226, 179, 60, 0.9));
 }
 
-.top-bar__light-switch:hover {
+.top-bar-light-switch:hover {
   color: #e2b33c;
   filter: drop-shadow(0 0 6px rgba(226, 179, 60, 0.9));
 }
 
-.top-bar__light-switch-rays {
+.top-bar-light-switch-rays {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.top-bar__light-switch--on .top-bar__light-switch-rays,
-.top-bar__light-switch:hover .top-bar__light-switch-rays {
+.top-bar-light-switch-on .top-bar-light-switch-rays,
+.top-bar-light-switch:hover .top-bar-light-switch-rays {
   opacity: 1;
 }
 
-.top-bar__light-switch--on:hover {
+.top-bar-light-switch-on:hover {
   color: #000;
   filter: none;
 }
 
-.top-bar__light-switch--on:hover .top-bar__light-switch-rays {
+.top-bar-light-switch-on:hover .top-bar-light-switch-rays {
   opacity: 0;
 }
 
-.stage--lights-on .top-bar__name {
+.stage-lights-on .top-bar-name {
   color: #1a1a17;
 }
 
-.stage--lights-on .top-bar__link {
+.stage-lights-on .top-bar-link {
   color: #3a3a36;
 }
 
-.stage--lights-on .top-bar__light-switch:not(.top-bar__light-switch--on) {
+.stage-lights-on .top-bar-light-switch:not(.top-bar-light-switch-on) {
   color: #8c887f;
 }

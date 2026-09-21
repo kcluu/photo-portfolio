@@ -33,13 +33,13 @@ export const Lightbox = ({
   return (
     <>
       <div
-        className="lightbox__scrim"
+        className="lightbox-scrim"
         style={{ opacity: isOpen ? 0.86 : 0, pointerEvents: isOpen ? "auto" : "none" }}
         onClick={onClose}
       />
 
       <div
-        className={`lightbox__box ${skipTransition ? "lightbox__box--no-transition" : ""}`}
+        className={`lightbox-box ${skipTransition ? "lightbox-box-no-transition" : ""}`}
         style={{
           left: shownRect.left,
           top: shownRect.top,
@@ -52,21 +52,21 @@ export const Lightbox = ({
       >
         {photo && (
           <div
-            className="lightbox__image"
+            className="lightbox-image"
             style={{ background: `linear-gradient(160deg, ${photo.colorFrom}, ${photo.colorTo})` }}
           />
         )}
 
-        <div className={`lightbox__caption ${isExpanded ? "lightbox__caption--visible" : ""}`}>
-          <div className="lightbox__meta">
+        <div className={`lightbox-caption ${isExpanded ? "lightbox-caption-visible" : ""}`}>
+          <div className="lightbox-meta">
             FRAME {photo?.frame} / {totalCount} — PLACEHOLDER IMAGE
           </div>
-          <div className="lightbox__title">{photo?.caption}</div>
+          <div className="lightbox-title">{photo?.caption}</div>
         </div>
 
         <button
           type="button"
-          className={`lightbox__close ${isExpanded ? "lightbox__control--visible" : ""}`}
+          className={`lightbox-close ${isExpanded ? "lightbox-control-visible" : ""}`}
           onClick={onClose}
           aria-label="Close"
         >
@@ -74,7 +74,7 @@ export const Lightbox = ({
         </button>
         <button
           type="button"
-          className={`lightbox__nav lightbox__nav--prev ${isExpanded ? "lightbox__control--visible" : ""}`}
+          className={`lightbox-nav lightbox-nav-prev ${isExpanded ? "lightbox-control-visible" : ""}`}
           onClick={onPrevious}
           aria-label="Previous photo"
         >
@@ -82,7 +82,7 @@ export const Lightbox = ({
         </button>
         <button
           type="button"
-          className={`lightbox__nav lightbox__nav--next ${isExpanded ? "lightbox__control--visible" : ""}`}
+          className={`lightbox-nav lightbox-nav-next ${isExpanded ? "lightbox-control-visible" : ""}`}
           onClick={onNext}
           aria-label="Next photo"
         >

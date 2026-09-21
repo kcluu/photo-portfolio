@@ -9,6 +9,6 @@
   transition: background 0.3s ease;
 }
 
-.stage--lights-on {
+.stage-lights-on {
   background: #ffffff;
 }

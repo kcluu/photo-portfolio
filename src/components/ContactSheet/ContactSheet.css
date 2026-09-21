@@ -7,7 +7,7 @@
   cursor: none;
 }
 
-.contact-sheet__grid {
+.contact-sheet-grid {
   width: 100%;
   height: 100%;
   display: grid;
@@ -15,11 +15,11 @@
   transition: background 0.3s ease;
 }
 
-.contact-sheet__grid--lit {
+.contact-sheet-grid-lit {
   background: #ffffff;
 }
 
-.contact-sheet__sprocket {
+.contact-sheet-sprocket {
   position: absolute;
   left: 0;
   right: 0;
@@ -28,15 +28,15 @@
   background-image: repeating-linear-gradient(90deg, #3a3a36 0 4px, transparent 4px 13px);
 }
 
-.contact-sheet__sprocket--top {
+.contact-sheet-sprocket-top {
   top: 46px;
 }
 
-.contact-sheet__sprocket--bottom {
+.contact-sheet-sprocket-bottom {
   bottom: 30px;
 }
 
-.contact-sheet__slate {
+.contact-sheet-slate {
   position: absolute;
   left: 0;
   right: 0;
@@ -48,6 +48,6 @@
   color: #8c887f;
 }
 
-.stage--lights-on .contact-sheet__slate {
+.stage-lights-on .contact-sheet-slate {
   color: #56534c;
 }

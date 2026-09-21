@@ -37,11 +37,11 @@ export const ContactSheet = ({
   onGridLeave,
 }: ContactSheetProps) => (
   <>
-    <div className="contact-sheet__sprocket contact-sheet__sprocket--top" />
+    <div className="contact-sheet-sprocket contact-sheet-sprocket-top" />
 
     <div className="contact-sheet" ref={containerRef} onMouseEnter={onGridEnter} onMouseLeave={onGridLeave}>
       <div
-        className={`contact-sheet__grid ${lightsOn ? "contact-sheet__grid--lit" : ""}`}
+        className={`contact-sheet-grid ${lightsOn ? "contact-sheet-grid-lit" : ""}`}
         style={{
           gridTemplateColumns: `repeat(${columns}, 1fr)`,
           gridTemplateRows: `repeat(${rows}, 1fr)`,
@@ -63,9 +63,9 @@ export const ContactSheet = ({
       </div>
     </div>
 
-    <div className="contact-sheet__sprocket contact-sheet__sprocket--bottom" />
+    <div className="contact-sheet-sprocket contact-sheet-sprocket-bottom" />
 
-    <div className="contact-sheet__slate">
+    <div className="contact-sheet-slate">
       ROLL 04 — {filmStockLabel} — {photos.length} EXPOSURES — PLACEHOLDER IMAGES
     </div>
   </>

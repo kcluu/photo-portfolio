@@ -12,25 +12,25 @@
   transition: opacity 0.5s ease;
 }
 
-.loading-screen--exit {
+.loading-screen-exit {
   opacity: 0;
   pointer-events: none;
 }
 
-.loading-screen__spinner {
+.loading-screen-spinner {
   position: relative;
   width: 52px;
   height: 52px;
 }
 
-.loading-screen__ring {
+.loading-screen-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   border: 1px solid rgba(244, 241, 234, 0.2);
 }
 
-.loading-screen__pulse {
+.loading-screen-pulse {
   position: absolute;
   inset: 16px;
   border-radius: 50%;
@@ -49,13 +49,13 @@
   }
 }
 
-.loading-screen__word-stack {
+.loading-screen-word-stack {
   position: relative;
   width: 200px;
   height: 16px;
 }
 
-.loading-screen__words {
+.loading-screen-words {
   position: absolute;
   inset: 0;
   perspective: 220px;
@@ -63,11 +63,11 @@
   transition: opacity 0.3s ease;
 }
 
-.loading-screen__words--hidden {
+.loading-screen-words-hidden {
   opacity: 0;
 }
 
-.loading-screen__word {
+.loading-screen-word {
   position: absolute;
   inset: 0;
   display: flex;

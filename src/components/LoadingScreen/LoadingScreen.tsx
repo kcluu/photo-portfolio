@@ -46,21 +46,21 @@ export const LoadingScreen = ({
   const isSpinning = stage === "spin";
 
   return (
-    <div className={`loading-screen ${stage === "exit" ? "loading-screen--exit" : ""}`}>
-      <div className="loading-screen__spinner">
-        <div className="loading-screen__ring" />
+    <div className={`loading-screen ${stage === "exit" ? "loading-screen-exit" : ""}`}>
+      <div className="loading-screen-spinner">
+        <div className="loading-screen-ring" />
         <div
-          className="loading-screen__pulse"
+          className="loading-screen-pulse"
           style={{ backgroundColor: accentColor }}
         />
       </div>
 
-      <div className="loading-screen__word-stack">
-        <div className={`loading-screen__words ${isSpinning ? "" : "loading-screen__words--hidden"}`}>
+      <div className="loading-screen-word-stack">
+        <div className={`loading-screen-words ${isSpinning ? "" : "loading-screen-words-hidden"}`}>
           {words.map((word, index) => (
             <div
               key={word}
-              className="loading-screen__word"
+              className="loading-screen-word"
               style={{ transform: `rotateX(${index === wordIndex ? 0 : 90}deg)` }}
             >
               {word}

@@ -4,26 +4,26 @@
   z-index: 60;
 }
 
-.viewfinder-cursor__line {
+.viewfinder-cursor-line {
   position: absolute;
   opacity: 0.85;
 }
 
-.viewfinder-cursor__line--h {
+.viewfinder-cursor-line-h {
   top: 50%;
   left: 0;
   right: 0;
   height: 1px;
 }
 
-.viewfinder-cursor__line--v {
+.viewfinder-cursor-line-v {
   left: 50%;
   top: 0;
   bottom: 0;
   width: 1px;
 }
 
-.viewfinder-cursor__corner {
+.viewfinder-cursor-corner {
   position: absolute;
   width: 9px;
   height: 9px;
@@ -31,28 +31,28 @@
   border-width: 0;
 }
 
-.viewfinder-cursor__corner--tl {
+.viewfinder-cursor-corner-tl {
   top: -1px;
   left: -1px;
   border-top-width: 1px;
   border-left-width: 1px;
 }
 
-.viewfinder-cursor__corner--tr {
+.viewfinder-cursor-corner-tr {
   top: -1px;
   right: -1px;
   border-top-width: 1px;
   border-right-width: 1px;
 }
 
-.viewfinder-cursor__corner--bl {
+.viewfinder-cursor-corner-bl {
   bottom: -1px;
   left: -1px;
   border-bottom-width: 1px;
   border-left-width: 1px;
 }
 
-.viewfinder-cursor__corner--br {
+.viewfinder-cursor-corner-br {
   bottom: -1px;
   right: -1px;
   border-bottom-width: 1px;

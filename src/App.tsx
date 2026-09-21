@@ -3,6 +3,7 @@ import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
 import { TopBar } from "./components/TopBar/TopBar";
 import { ContactSheet } from "./components/ContactSheet/ContactSheet";
 import { Lightbox } from "./components/Lightbox/Lightbox";
+import { InfoModal } from "./components/InfoModal/InfoModal";
 import { ViewfinderCursor } from "./components/ViewfinderCursor/ViewfinderCursor";
 import { Tooltip } from "./components/Tooltip/Tooltip";
 import { useElementSize } from "./hooks/useElementSize";
@@ -21,11 +22,26 @@ const CATEGORIES: CategoryFilter[] = ["all", "concert", "portrait", "postcard", 
 
 const ALL_PHOTOS = createPhotoPool(TOTAL_PHOTOS);
 
+const MODAL_CONTENT: Record<string, { title: string; body: string[] }> = {
+  About: {
+    title: "About",
+    body: [
+      "Katelyn Luu is a film photographer shooting concert, portrait, postcard, and editorial work on 35mm.",
+      "This site is an ongoing contact sheet — new rolls are added as they're developed.",
+    ],
+  },
+  Contact: {
+    title: "Contact",
+    body: ["For bookings and print inquiries:", "hello@katelynluu.com"],
+  },
+};
+
 export const App = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [lightsOn, setLightsOn] = useState(false);
   const [isOverGrid, setIsOverGrid] = useState(false);
+  const [activeLink, setActiveLink] = useState<string | null>(null);
 
   const { ref: stageRef, size: stageSize } = useElementSize<HTMLDivElement>();
   const { ref: sheetRef, size: sheetSize } = useElementSize<HTMLDivElement>();
@@ -68,7 +84,7 @@ export const App = () => {
   const originRect = lightbox.selectedIndex !== null ? rects[lightbox.selectedIndex] ?? null : null;
 
   return (
-    <div className={`stage ${lightsOn ? "stage--lights-on" : ""}`} ref={stageRef} onMouseMove={onMouseMove}>
+    <div className={`stage ${lightsOn ? "stage-lights-on" : ""}`} ref={stageRef} onMouseMove={onMouseMove}>
       <LoadingScreen accentColor={ACCENT_COLOR} />
 
       <TopBar
@@ -79,6 +95,7 @@ export const App = () => {
         categoryLabels={CATEGORY_LABELS}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
+        onOpenLink={setActiveLink}
       />
 
       <ContactSheet
@@ -121,6 +138,13 @@ export const App = () => {
       {(isOverGrid || selectedPhoto !== null) && (
         <ViewfinderCursor x={cursorPosition.x} y={cursorPosition.y} accentColor={ACCENT_COLOR} />
       )}
+
+      <InfoModal
+        title={activeLink ? MODAL_CONTENT[activeLink].title : ""}
+        body={activeLink ? MODAL_CONTENT[activeLink].body : []}
+        isOpen={activeLink !== null}
+        onClose={() => setActiveLink(null)}
+      />
     </div>
   );
 };

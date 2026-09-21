@@ -21,7 +21,7 @@ export const PhotoCell = ({
   onSelect,
 }: PhotoCellProps) => (
   <div
-    className={`photo-cell ${isDimmed ? "photo-cell--dimmed" : ""}`}
+    className={`photo-cell ${isDimmed ? "photo-cell-dimmed" : ""}`}
     style={{
       gridColumn: `span ${columnSpan}`,
       background: `linear-gradient(160deg, ${photo.colorFrom}, ${photo.colorTo})`,
@@ -30,8 +30,8 @@ export const PhotoCell = ({
     onMouseLeave={onHoverEnd}
     onClick={onSelect}
   >
-    <div className="photo-cell__grain" />
-    <div className={`photo-cell__frame ${isHighlighted ? "photo-cell__frame--visible" : ""}`}>
+    <div className="photo-cell-grain" />
+    <div className={`photo-cell-frame ${isHighlighted ? "photo-cell-frame-visible" : ""}`}>
       {photo.frame}
     </div>
   </div>
