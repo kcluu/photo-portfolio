@@ -1,0 +1,52 @@
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+.top-bar__name {
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  color: #f4f1ea;
+}
+
+.top-bar__nav {
+  display: flex;
+  gap: 28px;
+}
+
+.top-bar__link {
+  position: relative;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9c5ba;
+  text-decoration: none;
+  cursor: none;
+}
+
+.top-bar__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #f4f1ea;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.top-bar__link:hover::after {
+  transform: scaleX(1);
+}

@@ -1,0 +1,120 @@
+import { useMemo, useState } from "react";
+import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
+import { TopBar } from "./components/TopBar/TopBar";
+import { CategoryTabs } from "./components/CategoryTabs/CategoryTabs";
+import { ContactSheet } from "./components/ContactSheet/ContactSheet";
+import { Lightbox } from "./components/Lightbox/Lightbox";
+import { ViewfinderCursor } from "./components/ViewfinderCursor/ViewfinderCursor";
+import { Tooltip } from "./components/Tooltip/Tooltip";
+import { useElementSize } from "./hooks/useElementSize";
+import { useRelativeMousePosition } from "./hooks/useRelativeMousePosition";
+import { useContactSheetLayout } from "./hooks/useContactSheetLayout";
+import { useLightbox } from "./hooks/useLightbox";
+import { createPhotoPool, CATEGORY_LABELS, FILM_STOCK_LABELS } from "./data/photos";
+import type { CategoryFilter } from "./types";
+import "./App.css";
+
+const ACCENT_COLOR = "#e2b33c";
+const GRID_GAP = 3;
+const GRID_TOP_OFFSET = 90;
+const TOTAL_PHOTOS = 60;
+const CATEGORIES: CategoryFilter[] = ["all", "concert", "portrait", "postcard", "editorial"];
+
+const ALL_PHOTOS = createPhotoPool(TOTAL_PHOTOS);
+
+export const App = () => {
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const { ref: stageRef, size: stageSize } = useElementSize<HTMLDivElement>();
+  const { ref: sheetRef, size: sheetSize } = useElementSize<HTMLDivElement>();
+  const { position: cursorPosition, onMouseMove } = useRelativeMousePosition({ x: 720, y: 450 });
+
+  const photos = useMemo(
+    () => (activeCategory === "all" ? ALL_PHOTOS : ALL_PHOTOS.filter((photo) => photo.category === activeCategory)),
+    [activeCategory],
+  );
+
+  const { columns, rows, spans, rects } = useContactSheetLayout(
+    photos.length,
+    sheetSize.width,
+    sheetSize.height,
+    GRID_GAP,
+    GRID_TOP_OFFSET,
+  );
+
+  const lightbox = useLightbox(photos.length);
+
+  const targetRect = useMemo(() => {
+    const width = Math.min(720, stageSize.width * 0.6 || 720);
+    const height = width * 0.75;
+    return {
+      left: (stageSize.width - width) / 2,
+      top: (stageSize.height - height) / 2,
+      width,
+      height,
+    };
+  }, [stageSize.width, stageSize.height]);
+
+  const handleSelectCategory = (category: CategoryFilter) => {
+    setActiveCategory(category);
+    setHoveredIndex(null);
+    lightbox.reset();
+  };
+
+  const hoveredPhoto = hoveredIndex !== null ? photos[hoveredIndex] : null;
+  const selectedPhoto = lightbox.selectedIndex !== null ? photos[lightbox.selectedIndex] : null;
+  const originRect = lightbox.selectedIndex !== null ? rects[lightbox.selectedIndex] ?? null : null;
+
+  return (
+    <div className="stage" ref={stageRef} onMouseMove={onMouseMove}>
+      <LoadingScreen accentColor={ACCENT_COLOR} />
+
+      <TopBar siteName="R. Matsuda" />
+
+      <CategoryTabs
+        categories={CATEGORIES}
+        labels={CATEGORY_LABELS}
+        activeCategory={activeCategory}
+        accentColor={ACCENT_COLOR}
+        onSelect={handleSelectCategory}
+      />
+
+      <ContactSheet
+        containerRef={sheetRef}
+        photos={photos}
+        spans={spans}
+        columns={columns}
+        rows={rows}
+        gap={GRID_GAP}
+        hoveredIndex={hoveredIndex}
+        filmStockLabel={FILM_STOCK_LABELS[activeCategory]}
+        onHoverStart={setHoveredIndex}
+        onHoverEnd={() => setHoveredIndex(null)}
+        onSelect={lightbox.open}
+      />
+
+      <Tooltip
+        x={cursorPosition.x}
+        y={cursorPosition.y}
+        visible={hoveredPhoto !== null}
+        text={hoveredPhoto ? `#${hoveredPhoto.frame} — ${hoveredPhoto.caption}` : ""}
+        accentColor={ACCENT_COLOR}
+      />
+
+      <Lightbox
+        photo={selectedPhoto}
+        originRect={originRect}
+        targetRect={targetRect}
+        phase={lightbox.phase}
+        skipTransition={lightbox.skipTransition}
+        totalCount={photos.length}
+        onClose={lightbox.close}
+        onNext={lightbox.showNext}
+        onPrevious={lightbox.showPrevious}
+      />
+
+      <ViewfinderCursor x={cursorPosition.x} y={cursorPosition.y} accentColor={ACCENT_COLOR} />
+    </div>
+  );
+};

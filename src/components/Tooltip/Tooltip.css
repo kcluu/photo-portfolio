@@ -1,0 +1,14 @@
+.tooltip {
+  position: absolute;
+  z-index: 61;
+  pointer-events: none;
+  background: #0c0c0b;
+  border: 1px solid;
+  padding: 6px 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: #f4f1ea;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}

@@ -1,0 +1,83 @@
+.loading-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: #0c0c0b;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.loading-screen--exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-screen__spinner {
+  position: relative;
+  width: 52px;
+  height: 52px;
+}
+
+.loading-screen__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 241, 234, 0.2);
+}
+
+.loading-screen__pulse {
+  position: absolute;
+  inset: 16px;
+  border-radius: 50%;
+  animation: loading-screen-breathe 1.7s ease-in-out infinite;
+}
+
+@keyframes loading-screen-breathe {
+  0%,
+  100% {
+    transform: scale(0.32);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading-screen__word-stack {
+  position: relative;
+  width: 200px;
+  height: 16px;
+}
+
+.loading-screen__words {
+  position: absolute;
+  inset: 0;
+  perspective: 220px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.loading-screen__words--hidden {
+  opacity: 0;
+}
+
+.loading-screen__word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8c887f;
+  backface-visibility: hidden;
+  transition: transform 0.38s ease;
+}

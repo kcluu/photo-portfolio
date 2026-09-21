@@ -1,0 +1,100 @@
+.lightbox__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  background: #050504;
+  transition: opacity 0.4s ease;
+}
+
+.lightbox__box {
+  position: absolute;
+  overflow: hidden;
+  z-index: 71;
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.5s cubic-bezier(0.16, 1, 0.3, 1), height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s ease;
+}
+
+.lightbox__box--no-transition {
+  transition: none;
+}
+
+.lightbox__image {
+  position: absolute;
+  inset: 0;
+}
+
+.lightbox__caption {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  color: #f4f1ea;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox__caption--visible {
+  opacity: 1;
+  transition-delay: 0.25s;
+}
+
+.lightbox__meta {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  opacity: 0.65;
+}
+
+.lightbox__title {
+  font-family: "Fraunces", serif;
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+.lightbox__control--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.25s;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  appearance: none;
+  background: none;
+  border: none;
+  color: #f4f1ea;
+  cursor: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox__close {
+  top: 14px;
+  right: 18px;
+  font-size: 20px;
+  opacity: 0;
+}
+
+.lightbox__close.lightbox__control--visible {
+  opacity: 0.8;
+}
+
+.lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+}
+
+.lightbox__nav.lightbox__control--visible {
+  opacity: 0.65;
+}
+
+.lightbox__nav--prev {
+  left: 14px;
+}
+
+.lightbox__nav--next {
+  right: 14px;
+}

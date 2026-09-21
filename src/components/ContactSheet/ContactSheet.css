@@ -1,0 +1,43 @@
+.contact-sheet {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+}
+
+.contact-sheet__grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  background: #000;
+}
+
+.contact-sheet__sprocket {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  opacity: 0.5;
+  background-image: repeating-linear-gradient(90deg, #3a3a36 0 4px, transparent 4px 13px);
+}
+
+.contact-sheet__sprocket--top {
+  top: 84px;
+}
+
+.contact-sheet__sprocket--bottom {
+  bottom: 30px;
+}
+
+.contact-sheet__slate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9px;
+  text-align: center;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: #8c887f;
+}
