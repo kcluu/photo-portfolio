@@ -41,16 +41,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
   margin-top: 16px;
   text-align: center;
   color: #f4f1ea;
 }
 
 .lightbox-title {
+  margin-top: 4px;
   font-family: "PP Editorial New", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  letter-spacing: 0.08em;
 }
 .lightbox-meta,
 .lightbox-location {
