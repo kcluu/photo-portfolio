@@ -9,6 +9,7 @@
 .lightbox-box {
   position: absolute;
   overflow: hidden;
+  background: #050504;
   z-index: 71;
   transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     width 0.5s cubic-bezier(0.16, 1, 0.3, 1), height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
@@ -22,6 +23,9 @@
 .lightbox-image {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .lightbox-caption {
@@ -46,9 +50,19 @@
 }
 
 .lightbox-title {
-  font-family: "Fraunces", serif;
+  font-family: "PP Editorial New", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200;
   font-size: 22px;
   margin-top: 4px;
+}
+
+.lightbox-location {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-top: 6px;
 }
 
 .lightbox-control-visible {

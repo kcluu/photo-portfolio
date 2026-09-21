@@ -46,18 +46,20 @@
 }
 
 .info-modal-title {
-  font-family: "Fraunces", serif;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 24px;
   color: #f4f1ea;
   margin-bottom: 16px;
   transition: color 0.3s ease;
+  text-transform: uppercase;
 }
 
 .info-modal-paragraph {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  line-height: 1.6;
+  font-family: "PP Editorial New", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
   letter-spacing: 0.02em;
+  font-size: 14px;
+  line-height: 1.6;
   color: #c9c5ba;
   margin: 0 0 12px;
   transition: color 0.3s ease;
@@ -65,6 +67,11 @@
 
 .info-modal-paragraph:last-child {
   margin-bottom: 0;
+}
+
+.info-modal-paragraph em {
+  font-style: italic;
+  font-weight: 400;
 }
 
 .stage-lights-on .info-modal-box {
