@@ -16,7 +16,7 @@ export const Lightbox = ({ photo, isOpen, onClose }: LightboxProps) => (
     />
 
     <div
-      className={`lightbox-box ${isOpen ? "lightbox-box-visible" : ""}`}
+      className={`lightbox-content ${isOpen ? "lightbox-content-visible" : ""}`}
       onClick={(event) => event.stopPropagation()}
     >
       {photo && (
@@ -29,14 +29,19 @@ export const Lightbox = ({ photo, isOpen, onClose }: LightboxProps) => (
       )}
 
       <div className="lightbox-caption">
-        <div className="lightbox-meta">FRAME {photo?.frame}</div>
-        <div className="lightbox-title">{photo?.caption}</div>
-        {photo?.location && <div className="lightbox-location">{photo.location}</div>}
+        <span className="lightbox-meta">FRAME {photo?.frame}</span>
+        <span className="lightbox-title">{photo?.caption}</span>
+        {photo?.location && <span className="lightbox-location">{photo.location}</span>}
       </div>
-
-      <button type="button" className="lightbox-close" onClick={onClose} aria-label="Close">
-        ×
-      </button>
     </div>
+
+    <button
+      type="button"
+      className={`lightbox-close ${isOpen ? "lightbox-close-visible" : ""}`}
+      onClick={onClose}
+      aria-label="Close"
+    >
+      ×
+    </button>
   </>
 );
