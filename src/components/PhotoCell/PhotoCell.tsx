@@ -24,7 +24,13 @@ export const PhotoCell = ({
     onMouseLeave={onHoverEnd}
     onClick={onSelect}
   >
-    <img className="photo-cell-image" src={photo.src} alt={photo.caption} loading="lazy" />
+    <img
+      className="photo-cell-image"
+      src={photo.src}
+      alt={photo.caption}
+      loading="lazy"
+      onContextMenu={(event) => event.preventDefault()}
+    />
     <div className="photo-cell-grain" />
     <div className={`photo-cell-frame ${isHighlighted ? "photo-cell-frame-visible" : ""}`}>
       {photo.frame}

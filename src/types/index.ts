@@ -10,12 +10,3 @@ export interface Photo {
   category: Category;
   src: string;
 }
-
-export interface CellRect {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-export type LightboxPhase = "closed" | "atCell" | "expanded";

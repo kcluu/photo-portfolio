@@ -1,13 +1,11 @@
 import { useCallback, useRef, useState } from "react";
-import type { LightboxPhase } from "../types";
 
-const CLOSE_ANIMATION_MS = 550;
+// Matches the box's opacity/transform transition duration in Lightbox.css.
+const CLOSE_ANIMATION_MS = 300;
 
 interface LightboxState {
   selectedIndex: number | null;
-  phase: LightboxPhase;
-  // True only for the single frame that must snap instantly, with no transition
-  skipTransition: boolean;
+  isOpen: boolean;
   open: (index: number) => void;
   close: () => void;
   goTo: (index: number) => void;
@@ -16,32 +14,21 @@ interface LightboxState {
 
 export const useLightbox = (): LightboxState => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [phase, setPhase] = useState<LightboxPhase>("closed");
-  const skipTransitionRef = useRef(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const closeTimerRef = useRef<number>();
 
   const open = useCallback((index: number) => {
-    skipTransitionRef.current = true;
+    window.clearTimeout(closeTimerRef.current);
     setSelectedIndex(index);
-    setPhase("atCell");
-
-    // Wait a frame so the browser paints the instant snap before we enable
-    // the transition and move to the expanded rect
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        skipTransitionRef.current = false;
-        setPhase("expanded");
-      });
-    });
+    setIsOpen(true);
   }, []);
 
   const close = useCallback(() => {
-    skipTransitionRef.current = false;
-    setPhase("atCell");
-
-    window.setTimeout(() => {
-      skipTransitionRef.current = true;
+    setIsOpen(false);
+    // Keep the photo mounted until the fade-out finishes, so the box isn't
+    // suddenly empty while it's still visible.
+    closeTimerRef.current = window.setTimeout(() => {
       setSelectedIndex(null);
-      setPhase("closed");
     }, CLOSE_ANIMATION_MS);
   }, []);
 
@@ -50,15 +37,14 @@ export const useLightbox = (): LightboxState => {
   }, []);
 
   const reset = useCallback(() => {
-    skipTransitionRef.current = true;
+    window.clearTimeout(closeTimerRef.current);
     setSelectedIndex(null);
-    setPhase("closed");
+    setIsOpen(false);
   }, []);
 
   return {
     selectedIndex,
-    phase,
-    skipTransition: skipTransitionRef.current,
+    isOpen,
     open,
     close,
     goTo,

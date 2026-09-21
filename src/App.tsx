@@ -20,7 +20,6 @@ import "./App.css";
 
 const ACCENT_COLOR = "#e2b33c";
 const GRID_GAP = 3;
-const GRID_TOP_OFFSET = 52;
 const ALL_TAB_ROWS = 3;
 const CATEGORIES: CategoryFilter[] = ["all", "live", "portrait", "postcard", "editorial"];
 
@@ -36,7 +35,12 @@ const MODAL_CONTENT: Record<string, { title: string; body: ReactNode[] }> = {
   },
   Contact: {
     title: "Contact",
-    body: ["For all inquiries:", "hello@katelynluu.com"],
+    body: [
+      "For all inquiries: katelynluuphoto@gmail.com",
+      <a href="https://www.instagram.com/katelyn35mm" target="_blank" rel="noopener noreferrer">
+        @katelyn35mm
+      </a>,
+    ],
   },
 };
 
@@ -67,12 +71,11 @@ export const App = () => {
   const photos =
     activeCategory === "all" ? allPhotosShuffled.slice(0, allTabColumns * ALL_TAB_ROWS) : photosByCategory[activeCategory];
 
-  const { columns, rows, rects } = useContactSheetLayout(
+  const { columns, rows } = useContactSheetLayout(
     photos.length,
     sheetSize.width,
     sheetSize.height,
     GRID_GAP,
-    GRID_TOP_OFFSET,
     activeCategory === "all" ? ALL_TAB_ROWS : undefined,
   );
 
@@ -82,17 +85,6 @@ export const App = () => {
   // Skip waiting on preload if the fetch itself failed — nothing to load
   const imagesReady = error !== null || (!isLoading && imagesLoaded);
 
-  const targetRect = useMemo(() => {
-    const width = Math.min(720, stageSize.width * 0.6 || 720);
-    const height = width * 0.75;
-    return {
-      left: (stageSize.width - width) / 2,
-      top: (stageSize.height - height) / 2,
-      width,
-      height,
-    };
-  }, [stageSize.width, stageSize.height]);
-
   const handleSelectCategory = (category: CategoryFilter) => {
     setActiveCategory(category);
     setHoveredIndex(null);
@@ -101,7 +93,6 @@ export const App = () => {
 
   const hoveredPhoto = hoveredIndex !== null ? photos[hoveredIndex] : null;
   const selectedPhoto = lightbox.selectedIndex !== null ? photos[lightbox.selectedIndex] : null;
-  const originRect = lightbox.selectedIndex !== null ? rects[lightbox.selectedIndex] ?? null : null;
 
   const stepLightbox = (direction: 1 | -1) => {
     if (lightbox.selectedIndex === null || photos.length === 0) return;
@@ -154,10 +145,7 @@ export const App = () => {
 
       <Lightbox
         photo={selectedPhoto}
-        originRect={originRect}
-        targetRect={targetRect}
-        phase={lightbox.phase}
-        skipTransition={lightbox.skipTransition}
+        isOpen={lightbox.isOpen}
         totalCount={photos.length}
         onClose={lightbox.close}
         onNext={() => stepLightbox(1)}

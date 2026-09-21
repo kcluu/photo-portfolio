@@ -74,6 +74,22 @@
   font-weight: 400;
 }
 
+.info-modal-paragraph a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(244, 241, 234, 0.35);
+  transition: text-decoration-color 0.3s ease;
+}
+
+.info-modal-paragraph a:hover {
+  text-decoration-color: currentColor;
+}
+
+.stage-lights-on .info-modal-paragraph a {
+  text-decoration-color: rgba(12, 12, 11, 0.3);
+}
+
 .stage-lights-on .info-modal-box {
   background: #ffffff;
   border-color: rgba(12, 12, 11, 0.12);
