@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { CellRect } from "../types";
 
-const TARGET_ASPECT = 4 / 3;
+const TARGET_ASPECT = 1;
 const MIN_COLUMNS = 3;
 const MAX_COLUMNS = 14;
 
@@ -13,13 +13,11 @@ interface GridShape {
 interface ContactSheetLayout {
   columns: number;
   rows: number;
-  // How many grid columns each cell should span, in item order
-  spans: number[];
   // The pixel position/size each cell would occupy, in item order
   rects: CellRect[];
 }
 
-// Picks the column/row count whose cells land closest to a 4:3 ratio
+// Picks the column/row count whose cells land closest to square
 const chooseGridShape = (count: number, width: number, height: number, gap: number): GridShape => {
   let best: (GridShape & { aspectDiff: number }) | null = null;
 
@@ -40,53 +38,48 @@ const chooseGridShape = (count: number, width: number, height: number, gap: numb
   return best ?? { columns: minColumns, rows: count };
 };
 
-const computeSpans = (count: number, columns: number): number[] => {
-  const spans = Array<number>(count).fill(1);
-  const fullRows = Math.floor(count / columns);
-  const remainder = count - fullRows * columns;
+// Picks the column count whose cells land closest to square when the row
+// count is fixed (e.g. "show exactly 3 rows"), independent of item count.
+export const chooseColumnsForRows = (rows: number, width: number, height: number, gap: number): number => {
+  if (width === 0 || height === 0 || rows <= 0) return MIN_COLUMNS;
 
-  if (remainder > 0) {
-    const baseSpan = Math.floor(columns / remainder);
-    const extraSpan = columns % remainder;
+  const rowHeight = (height - (rows - 1) * gap) / rows;
+  let bestColumns = MIN_COLUMNS;
+  let bestDiff = Infinity;
 
-    for (let slot = 0; slot < remainder; slot++) {
-      const span = baseSpan + (slot < extraSpan ? 1 : 0);
-      spans[fullRows * columns + slot] = span;
+  for (let columns = MIN_COLUMNS; columns <= MAX_COLUMNS; columns++) {
+    const columnWidth = (width - (columns - 1) * gap) / columns;
+    const diff = Math.abs(columnWidth / rowHeight - TARGET_ASPECT);
+
+    if (diff < bestDiff) {
+      bestColumns = columns;
+      bestDiff = diff;
     }
   }
 
-  return spans;
+  return bestColumns;
 };
 
+// Square cells all span a single column — stretching one across multiple
+// columns (as the old last-row-fill logic did) would make it a rectangle.
 const computeRects = (
-  spans: number[],
+  count: number,
   columns: number,
   columnWidth: number,
   rowHeight: number,
   gap: number,
   topOffset: number,
-): CellRect[] => {
-  const rects: CellRect[] = [];
-  let columnCursor = 0;
-  let rowCursor = 0;
-
-  for (const span of spans) {
-    rects.push({
-      left: columnCursor * (columnWidth + gap),
-      top: topOffset + rowCursor * (rowHeight + gap),
-      width: span * columnWidth + (span - 1) * gap,
+): CellRect[] =>
+  Array.from({ length: count }, (_, index) => {
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+    return {
+      left: column * (columnWidth + gap),
+      top: topOffset + row * (rowHeight + gap),
+      width: columnWidth,
       height: rowHeight,
-    });
-
-    columnCursor += span;
-    if (columnCursor >= columns) {
-      columnCursor = 0;
-      rowCursor += 1;
-    }
-  }
-
-  return rects;
-};
+    };
+  });
 
 export const useContactSheetLayout = (
   count: number,
@@ -94,19 +87,23 @@ export const useContactSheetLayout = (
   height: number,
   gap: number,
   topOffset: number,
+  // When set, the row count is fixed and columns are chosen to keep cells
+  // square, instead of picking whichever columns/rows combo best fits `count`.
+  fixedRows?: number,
 ): ContactSheetLayout =>
   useMemo(() => {
     const safeCount = Math.max(1, count);
 
     if (width === 0 || height === 0) {
-      return { columns: safeCount, rows: 1, spans: Array(count).fill(1), rects: [] };
+      return { columns: safeCount, rows: fixedRows ?? 1, rects: [] };
     }
 
-    const { columns, rows } = chooseGridShape(safeCount, width, height, gap);
+    const { columns, rows } = fixedRows
+      ? { columns: chooseColumnsForRows(fixedRows, width, height, gap), rows: fixedRows }
+      : chooseGridShape(safeCount, width, height, gap);
     const columnWidth = (width - (columns - 1) * gap) / columns;
     const rowHeight = (height - (rows - 1) * gap) / rows;
-    const spans = computeSpans(count, columns);
-    const rects = computeRects(spans, columns, columnWidth, rowHeight, gap, topOffset);
+    const rects = computeRects(count, columns, columnWidth, rowHeight, gap, topOffset);
 
-    return { columns, rows, spans, rects };
-  }, [count, width, height, gap, topOffset]);
+    return { columns, rows, rects };
+  }, [count, width, height, gap, topOffset, fixedRows]);

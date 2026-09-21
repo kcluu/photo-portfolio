@@ -12,3 +12,19 @@
 .stage-lights-on {
   background: #ffffff;
 }
+
+.stage-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #d6d5d1;
+  text-align: center;
+}
+
+.stage-lights-on .stage-error {
+  color: #3a3a36;
+}

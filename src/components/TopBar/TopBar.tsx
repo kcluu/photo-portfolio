@@ -10,6 +10,7 @@ interface TopBarProps {
   categoryLabels: Record<CategoryFilter, string>;
   activeCategory: CategoryFilter;
   onSelectCategory: (category: CategoryFilter) => void;
+  activeLink: string | null;
   onOpenLink: (link: string) => void;
 }
 
@@ -22,6 +23,7 @@ export const TopBar = ({
   categoryLabels,
   activeCategory,
   onSelectCategory,
+  activeLink,
   onOpenLink,
 }: TopBarProps) => (
   <header className="top-bar">
@@ -51,7 +53,12 @@ export const TopBar = ({
 
     <nav className="top-bar-nav">
       {navLinks.map((link) => (
-        <button key={link} type="button" className="top-bar-link" onClick={() => onOpenLink(link)}>
+        <button
+          key={link}
+          type="button"
+          className={`top-bar-link ${link === activeLink ? "top-bar-link-active" : ""}`}
+          onClick={() => onOpenLink(link)}
+        >
           <span className="top-bar-link-paren" aria-hidden="true">
             (
           </span>

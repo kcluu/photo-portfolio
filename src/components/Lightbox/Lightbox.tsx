@@ -50,18 +50,14 @@ export const Lightbox = ({
         }}
         onClick={(event) => event.stopPropagation()}
       >
-        {photo && (
-          <div
-            className="lightbox-image"
-            style={{ background: `linear-gradient(160deg, ${photo.colorFrom}, ${photo.colorTo})` }}
-          />
-        )}
+        {photo && <img className="lightbox-image" src={photo.src} alt={photo.caption} />}
 
         <div className={`lightbox-caption ${isExpanded ? "lightbox-caption-visible" : ""}`}>
           <div className="lightbox-meta">
-            FRAME {photo?.frame} / {totalCount} — PLACEHOLDER IMAGE
+            FRAME {photo?.frame} / {totalCount}
           </div>
           <div className="lightbox-title">{photo?.caption}</div>
+          {photo?.location && <div className="lightbox-location">{photo.location}</div>}
         </div>
 
         <button

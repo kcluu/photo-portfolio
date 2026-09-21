@@ -6,7 +6,6 @@ import "./ContactSheet.css";
 interface ContactSheetProps {
   containerRef: RefObject<HTMLDivElement>;
   photos: Photo[];
-  spans: number[];
   columns: number;
   rows: number;
   gap: number;
@@ -23,7 +22,6 @@ interface ContactSheetProps {
 export const ContactSheet = ({
   containerRef,
   photos,
-  spans,
   columns,
   rows,
   gap,
@@ -52,7 +50,6 @@ export const ContactSheet = ({
           <PhotoCell
             key={photo.id}
             photo={photo}
-            columnSpan={spans[index] ?? 1}
             isDimmed={!lightsOn && hoveredIndex !== null && hoveredIndex !== index}
             isHighlighted={hoveredIndex === index}
             onHoverStart={() => onHoverStart(index)}
@@ -66,7 +63,7 @@ export const ContactSheet = ({
     <div className="contact-sheet-sprocket contact-sheet-sprocket-bottom" />
 
     <div className="contact-sheet-slate">
-      ROLL 04 — {filmStockLabel} — {photos.length} EXPOSURES — PLACEHOLDER IMAGES
+      {filmStockLabel} — {photos.length} EXPOSURES
     </div>
   </>
 );

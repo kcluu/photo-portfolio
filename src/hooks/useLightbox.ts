@@ -10,12 +10,11 @@ interface LightboxState {
   skipTransition: boolean;
   open: (index: number) => void;
   close: () => void;
-  showNext: () => void;
-  showPrevious: () => void;
+  goTo: (index: number) => void;
   reset: () => void;
 }
 
-export const useLightbox = (itemCount: number): LightboxState => {
+export const useLightbox = (): LightboxState => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [phase, setPhase] = useState<LightboxPhase>("closed");
   const skipTransitionRef = useRef(false);
@@ -46,13 +45,9 @@ export const useLightbox = (itemCount: number): LightboxState => {
     }, CLOSE_ANIMATION_MS);
   }, []);
 
-  const showNext = useCallback(() => {
-    setSelectedIndex((current) => (current === null ? current : (current + 1) % itemCount));
-  }, [itemCount]);
-
-  const showPrevious = useCallback(() => {
-    setSelectedIndex((current) => (current === null ? current : (current - 1 + itemCount) % itemCount));
-  }, [itemCount]);
+  const goTo = useCallback((index: number) => {
+    setSelectedIndex(index);
+  }, []);
 
   const reset = useCallback(() => {
     skipTransitionRef.current = true;
@@ -66,8 +61,7 @@ export const useLightbox = (itemCount: number): LightboxState => {
     skipTransition: skipTransitionRef.current,
     open,
     close,
-    showNext,
-    showPrevious,
+    goTo,
     reset,
   };
 };

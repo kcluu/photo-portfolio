@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import "./InfoModal.css";
 
 interface InfoModalProps {
   title: string;
-  body: string[];
+  body: ReactNode[];
   isOpen: boolean;
   onClose: () => void;
 }
@@ -26,8 +27,8 @@ export const InfoModal = ({ title, body, isOpen, onClose }: InfoModalProps) => (
         ×
       </button>
       <div className="info-modal-title">{title}</div>
-      {body.map((paragraph) => (
-        <p key={paragraph} className="info-modal-paragraph">
+      {body.map((paragraph, index) => (
+        <p key={index} className="info-modal-paragraph">
           {paragraph}
         </p>
       ))}

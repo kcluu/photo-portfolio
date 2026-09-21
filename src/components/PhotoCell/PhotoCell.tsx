@@ -3,7 +3,6 @@ import "./PhotoCell.css";
 
 interface PhotoCellProps {
   photo: Photo;
-  columnSpan: number;
   isDimmed: boolean;
   isHighlighted: boolean;
   onHoverStart: () => void;
@@ -13,7 +12,6 @@ interface PhotoCellProps {
 
 export const PhotoCell = ({
   photo,
-  columnSpan,
   isDimmed,
   isHighlighted,
   onHoverStart,
@@ -22,14 +20,11 @@ export const PhotoCell = ({
 }: PhotoCellProps) => (
   <div
     className={`photo-cell ${isDimmed ? "photo-cell-dimmed" : ""}`}
-    style={{
-      gridColumn: `span ${columnSpan}`,
-      background: `linear-gradient(160deg, ${photo.colorFrom}, ${photo.colorTo})`,
-    }}
     onMouseEnter={onHoverStart}
     onMouseLeave={onHoverEnd}
     onClick={onSelect}
   >
+    <img className="photo-cell-image" src={photo.src} alt={photo.caption} loading="lazy" />
     <div className="photo-cell-grain" />
     <div className={`photo-cell-frame ${isHighlighted ? "photo-cell-frame-visible" : ""}`}>
       {photo.frame}

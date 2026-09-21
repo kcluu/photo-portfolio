@@ -1,4 +1,4 @@
-export type Category = "concert" | "portrait" | "postcard" | "editorial";
+export type Category = "live" | "portrait" | "postcard" | "editorial";
 
 export type CategoryFilter = "all" | Category;
 
@@ -6,11 +6,9 @@ export interface Photo {
   id: number;
   frame: string;
   caption: string;
+  location?: string;
   category: Category;
-  // TODO: Replace these with a real `src`
-  colorFrom: string;
-  colorTo: string;
-  src?: string;
+  src: string;
 }
 
 export interface CellRect {
