@@ -7,7 +7,7 @@ interface ContactSheetProps {
   containerRef: RefObject<HTMLDivElement>;
   photos: Photo[];
   columns: number;
-  rows: number;
+  rowHeight: number;
   gap: number;
   hoveredIndex: number | null;
   lightsOn: boolean;
@@ -23,7 +23,7 @@ export const ContactSheet = ({
   containerRef,
   photos,
   columns,
-  rows,
+  rowHeight,
   gap,
   hoveredIndex,
   lightsOn,
@@ -42,7 +42,7 @@ export const ContactSheet = ({
         className={`contact-sheet-grid ${lightsOn ? "contact-sheet-grid-lit" : ""}`}
         style={{
           gridTemplateColumns: `repeat(${columns}, 1fr)`,
-          gridTemplateRows: `repeat(${rows}, 1fr)`,
+          gridAutoRows: `${rowHeight}px`,
           gap: `${gap}px`,
         }}
       >

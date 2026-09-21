@@ -3,36 +3,16 @@ import { useMemo } from "react";
 const TARGET_ASPECT = 1;
 const MIN_COLUMNS = 3;
 const MAX_COLUMNS = 14;
+const TARGET_ROWS = 3;
 
-interface GridShape {
+interface ContactSheetLayout {
   columns: number;
-  rows: number;
+  rowHeight: number;
 }
 
-// Picks the column/row count whose cells land closest to square
-const chooseGridShape = (count: number, width: number, height: number, gap: number): GridShape => {
-  let best: (GridShape & { aspectDiff: number }) | null = null;
-
-  const maxColumns = Math.min(MAX_COLUMNS, count);
-  const minColumns = Math.max(1, Math.min(MIN_COLUMNS, count));
-
-  for (let columns = minColumns; columns <= Math.max(maxColumns, MIN_COLUMNS); columns++) {
-    const rows = Math.ceil(count / columns);
-    const columnWidth = (width - (columns - 1) * gap) / columns;
-    const rowHeight = (height - (rows - 1) * gap) / rows;
-    const aspectDiff = Math.abs(columnWidth / rowHeight - TARGET_ASPECT);
-
-    if (best === null || aspectDiff < best.aspectDiff) {
-      best = { columns, rows, aspectDiff };
-    }
-  }
-
-  return best ?? { columns: minColumns, rows: count };
-};
-
-// Picks the column count whose cells land closest to square when the row
-// count is fixed (e.g. "show exactly 3 rows"), independent of item count.
-export const chooseColumnsForRows = (rows: number, width: number, height: number, gap: number): number => {
+// Picks the column count whose cells land closest to square against a row
+// height of `height / rows`, independent of how many photos there are
+const chooseColumnsForRows = (rows: number, width: number, height: number, gap: number): number => {
   if (width === 0 || height === 0 || rows <= 0) return MIN_COLUMNS;
 
   const rowHeight = (height - (rows - 1) * gap) / rows;
@@ -52,23 +32,14 @@ export const chooseColumnsForRows = (rows: number, width: number, height: number
   return bestColumns;
 };
 
-export const useContactSheetLayout = (
-  count: number,
-  width: number,
-  height: number,
-  gap: number,
-  // When set, the row count is fixed and columns are chosen to keep cells
-  // square, instead of picking whichever columns/rows combo best fits `count`.
-  fixedRows?: number,
-): GridShape =>
+export const useContactSheetLayout = (width: number, height: number, gap: number): ContactSheetLayout =>
   useMemo(() => {
-    const safeCount = Math.max(1, count);
-
     if (width === 0 || height === 0) {
-      return { columns: safeCount, rows: fixedRows ?? 1 };
+      return { columns: MIN_COLUMNS, rowHeight: 0 };
     }
 
-    return fixedRows
-      ? { columns: chooseColumnsForRows(fixedRows, width, height, gap), rows: fixedRows }
-      : chooseGridShape(safeCount, width, height, gap);
-  }, [count, width, height, gap, fixedRows]);
+    const columns = chooseColumnsForRows(TARGET_ROWS, width, height, gap);
+    const rowHeight = (height - (TARGET_ROWS - 1) * gap) / TARGET_ROWS;
+
+    return { columns, rowHeight };
+  }, [width, height, gap]);

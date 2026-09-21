@@ -7,7 +7,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
   padding: 0 32px;
   box-sizing: border-box;
   z-index: 20;
@@ -20,6 +20,54 @@
   text-transform: uppercase;
   white-space: nowrap;
   flex: 0 0 auto;
+  transition: color 0.3s ease;
+}
+
+/* Only this section scrolls — the name and light switch are plain,
+   non-scrolling siblings, so there's no overlap/z-index trick needed to
+   keep scrolled content from showing behind them. */
+.top-bar-scroll {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.top-bar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.top-bar-scroll::before,
+.top-bar-scroll::after {
+  content: "";
+  position: sticky;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  flex: 0 0 auto;
+  pointer-events: none;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.top-bar-scroll::before {
+  left: 0;
+  margin-right: -20px;
+  background: linear-gradient(to right, #0c0c0b, transparent);
+}
+
+.top-bar-scroll::after {
+  right: 0;
+  margin-left: -20px;
+  background: linear-gradient(to left, #0c0c0b, transparent);
 }
 
 .top-bar-categories {
@@ -28,7 +76,7 @@
   align-items: center;
   justify-content: center;
   gap: 24px;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 
 .top-bar-category-tab {
@@ -107,27 +155,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   color: #c9c5ba;
-  transition:
-    color 0.3s ease,
-    filter 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .top-bar-light-switch-icon {
   display: block;
+  transition: filter 0.3s ease;
 }
 
 .top-bar-light-switch-on {
   color: #e2b33c;
+}
+
+.top-bar-light-switch-on .top-bar-light-switch-icon {
   filter: drop-shadow(0 0 6px rgba(226, 179, 60, 0.9));
 }
 
 .top-bar-light-switch:hover {
   color: #e2b33c;
+}
+
+.top-bar-light-switch:hover .top-bar-light-switch-icon {
   filter: drop-shadow(0 0 6px rgba(226, 179, 60, 0.9));
 }
 
@@ -143,6 +197,9 @@
 
 .top-bar-light-switch-on:hover {
   color: #000;
+}
+
+.top-bar-light-switch-on:hover .top-bar-light-switch-icon {
   filter: none;
 }
 
@@ -152,6 +209,14 @@
 
 .stage-lights-on .top-bar-name {
   color: #1a1a17;
+}
+
+.stage-lights-on .top-bar-scroll::before {
+  background: linear-gradient(to right, #ffffff, transparent);
+}
+
+.stage-lights-on .top-bar-scroll::after {
+  background: linear-gradient(to left, #ffffff, transparent);
 }
 
 .stage-lights-on .top-bar-link {

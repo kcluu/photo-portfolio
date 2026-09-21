@@ -9,7 +9,7 @@ import { ViewfinderCursor } from "./components/ViewfinderCursor/ViewfinderCursor
 import { Tooltip } from "./components/Tooltip/Tooltip";
 import { useElementSize } from "./hooks/useElementSize";
 import { useRelativeMousePosition } from "./hooks/useRelativeMousePosition";
-import { useContactSheetLayout, chooseColumnsForRows } from "./hooks/useContactSheetLayout";
+import { useContactSheetLayout } from "./hooks/useContactSheetLayout";
 import { useLightbox } from "./hooks/useLightbox";
 import { useImagePreload } from "./hooks/useImagePreload";
 import { usePhotos } from "./hooks/usePhotos";
@@ -20,7 +20,6 @@ import "./App.css";
 
 const ACCENT_COLOR = "#e2b33c";
 const GRID_GAP = 3;
-const ALL_TAB_ROWS = 3;
 const CATEGORIES: CategoryFilter[] = ["all", "live", "portrait", "postcard", "editorial"];
 
 const MODAL_CONTENT: Record<string, { title: string; body: ReactNode[] }> = {
@@ -66,20 +65,12 @@ export const App = () => {
     return grouped;
   }, [allPhotos]);
 
-  // "All" shows a fixed-random slice of every photo, sized to exactly fill 3 rows
-  const allTabColumns = chooseColumnsForRows(ALL_TAB_ROWS, sheetSize.width, sheetSize.height, GRID_GAP);
-  const photos =
-    activeCategory === "all"
-      ? allPhotosShuffled.slice(0, allTabColumns * ALL_TAB_ROWS)
-      : photosByCategory[activeCategory];
+  // "All" shows every photo in one fixed random order; each category tab
+  // shows that folder's full set, filename-sorted. Either way the grid
+  // targets 3 rows of square cells and scrolls vertically for the rest.
+  const photos = activeCategory === "all" ? allPhotosShuffled : photosByCategory[activeCategory];
 
-  const { columns, rows } = useContactSheetLayout(
-    photos.length,
-    sheetSize.width,
-    sheetSize.height,
-    GRID_GAP,
-    activeCategory === "all" ? ALL_TAB_ROWS : undefined,
-  );
+  const { columns, rowHeight } = useContactSheetLayout(sheetSize.width, sheetSize.height, GRID_GAP);
 
   const lightbox = useLightbox();
   const photoSrcs = useMemo(() => allPhotos.map((photo) => photo.src), [allPhotos]);
@@ -118,7 +109,7 @@ export const App = () => {
         containerRef={sheetRef}
         photos={photos}
         columns={columns}
-        rows={rows}
+        rowHeight={rowHeight}
         gap={GRID_GAP}
         hoveredIndex={hoveredIndex}
         lightsOn={lightsOn}
