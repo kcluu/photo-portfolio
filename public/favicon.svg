@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#f4f1ea" />
+  <text
+    x="16"
+    y="17"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="'Times New Roman', Georgia, serif"
+    font-size="10.5"
+    font-weight="400"
+    letter-spacing="-0.2"
+    fill="#0c0c0b"
+  >(KL)</text>
+</svg>
