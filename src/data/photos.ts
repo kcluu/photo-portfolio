@@ -1,5 +1,7 @@
 import type { Photo } from "../types";
 
+// TODO: Replace this with proper photos
+
 interface PhotoTone {
   caption: string;
   category: Photo["category"];
@@ -7,8 +9,6 @@ interface PhotoTone {
   colorTo: string;
 }
 
-// Each tone stands in for a real scan. Swap `colorFrom`/`colorTo` for a real
-// `src` (and drop the gradient in PhotoCell.css) once you have your images.
 const TONES: PhotoTone[] = [
   { caption: "Stage Lights, Bowery Ballroom", category: "concert", colorFrom: "#241119", colorTo: "#7a2f4a" },
   { caption: "Crowd Silhouettes, Brooklyn Steel", category: "concert", colorFrom: "#1a1424", colorTo: "#4a3f8a" },
@@ -24,7 +24,7 @@ const TONES: PhotoTone[] = [
   { caption: "Diner Counter", category: "editorial", colorFrom: "#2a2020", colorTo: "#6b4a4a" },
 ];
 
-/** Builds a pool of photos by cycling through the tone list. */
+// Builds a pool of photos by cycling through the tone list (temp)
 export const createPhotoPool = (count: number): Photo[] =>
   Array.from({ length: count }, (_, index) => {
     const tone = TONES[index % TONES.length];

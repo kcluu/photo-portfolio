@@ -5,7 +5,6 @@ interface ElementSize {
   height: number;
 }
 
-/** Tracks an element's rendered size, updating whenever it resizes. */
 export const useElementSize = <T extends HTMLElement>() => {
   const ref = useRef<T | null>(null);
   const [size, setSize] = useState<ElementSize>({ width: 0, height: 0 });

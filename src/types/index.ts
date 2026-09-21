@@ -7,7 +7,7 @@ export interface Photo {
   frame: string;
   caption: string;
   category: Category;
-  /** Replace these with a real `src` once you have scanned images. */
+  // TODO: Replace these with a real `src`
   colorFrom: string;
   colorTo: string;
   src?: string;

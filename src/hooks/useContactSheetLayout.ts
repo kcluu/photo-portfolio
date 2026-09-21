@@ -13,13 +13,13 @@ interface GridShape {
 interface ContactSheetLayout {
   columns: number;
   rows: number;
-  /** How many grid columns each cell should span, in item order. */
+  // How many grid columns each cell should span, in item order
   spans: number[];
-  /** The pixel position/size each cell would occupy, in item order. */
+  // The pixel position/size each cell would occupy, in item order
   rects: CellRect[];
 }
 
-/** Picks the column/row count whose cells land closest to a 4:3 ratio. */
+// Picks the column/row count whose cells land closest to a 4:3 ratio
 const chooseGridShape = (count: number, width: number, height: number, gap: number): GridShape => {
   let best: (GridShape & { aspectDiff: number }) | null = null;
 
@@ -40,11 +40,6 @@ const chooseGridShape = (count: number, width: number, height: number, gap: numb
   return best ?? { columns: minColumns, rows: count };
 };
 
-/**
- * Distributes any leftover column units in the final row across the cells
- * that actually exist there, so the sheet always finishes flush instead of
- * leaving empty trailing cells.
- */
 const computeSpans = (count: number, columns: number): number[] => {
   const spans = Array<number>(count).fill(1);
   const fullRows = Math.floor(count / columns);
@@ -93,12 +88,6 @@ const computeRects = (
   return rects;
 };
 
-/**
- * Works out how many columns/rows a contact sheet of `count` cells should
- * use to fill `width` x `height` with cells as close to 4:3 as possible,
- * then returns the exact pixel rect for every cell (used to morph the
- * lightbox out of whichever cell was clicked).
- */
 export const useContactSheetLayout = (
   count: number,
   width: number,

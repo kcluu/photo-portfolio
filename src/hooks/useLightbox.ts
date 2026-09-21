@@ -6,7 +6,7 @@ const CLOSE_ANIMATION_MS = 550;
 interface LightboxState {
   selectedIndex: number | null;
   phase: LightboxPhase;
-  /** True only for the single frame that must snap instantly, with no transition. */
+  // True only for the single frame that must snap instantly, with no transition
   skipTransition: boolean;
   open: (index: number) => void;
   close: () => void;
@@ -15,12 +15,6 @@ interface LightboxState {
   reset: () => void;
 }
 
-/**
- * Drives the "seamless" lightbox: opening snaps the box instantly onto the
- * clicked cell's own position (invisible, since it exactly overlaps that
- * cell), then a moment later animates it out to the centered view. Closing
- * reverses the same motion before disappearing.
- */
 export const useLightbox = (itemCount: number): LightboxState => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [phase, setPhase] = useState<LightboxPhase>("closed");
@@ -32,7 +26,7 @@ export const useLightbox = (itemCount: number): LightboxState => {
     setPhase("atCell");
 
     // Wait a frame so the browser paints the instant snap before we enable
-    // the transition and move to the expanded rect.
+    // the transition and move to the expanded rect
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         skipTransitionRef.current = false;

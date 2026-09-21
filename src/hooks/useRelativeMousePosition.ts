@@ -6,11 +6,7 @@ interface Point {
   y: number;
 }
 
-/**
- * Tracks the cursor's position relative to whichever element the returned
- * `onMouseMove` handler is attached to. Used for the custom viewfinder
- * cursor and the hover tooltip.
- */
+// Tracks cursor position for custom viewfinder
 export const useRelativeMousePosition = (initial: Point) => {
   const [position, setPosition] = useState<Point>(initial);
 
