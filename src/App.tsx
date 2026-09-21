@@ -69,7 +69,9 @@ export const App = () => {
   // "All" shows a fixed-random slice of every photo, sized to exactly fill 3 rows
   const allTabColumns = chooseColumnsForRows(ALL_TAB_ROWS, sheetSize.width, sheetSize.height, GRID_GAP);
   const photos =
-    activeCategory === "all" ? allPhotosShuffled.slice(0, allTabColumns * ALL_TAB_ROWS) : photosByCategory[activeCategory];
+    activeCategory === "all"
+      ? allPhotosShuffled.slice(0, allTabColumns * ALL_TAB_ROWS)
+      : photosByCategory[activeCategory];
 
   const { columns, rows } = useContactSheetLayout(
     photos.length,
@@ -93,11 +95,6 @@ export const App = () => {
 
   const hoveredPhoto = hoveredIndex !== null ? photos[hoveredIndex] : null;
   const selectedPhoto = lightbox.selectedIndex !== null ? photos[lightbox.selectedIndex] : null;
-
-  const stepLightbox = (direction: 1 | -1) => {
-    if (lightbox.selectedIndex === null || photos.length === 0) return;
-    lightbox.goTo((lightbox.selectedIndex + direction + photos.length) % photos.length);
-  };
 
   return (
     <div className={`stage ${lightsOn ? "stage-lights-on" : ""}`} ref={stageRef} onMouseMove={onMouseMove}>
@@ -143,14 +140,7 @@ export const App = () => {
         boundsHeight={stageSize.height}
       />
 
-      <Lightbox
-        photo={selectedPhoto}
-        isOpen={lightbox.isOpen}
-        totalCount={photos.length}
-        onClose={lightbox.close}
-        onNext={() => stepLightbox(1)}
-        onPrevious={() => stepLightbox(-1)}
-      />
+      <Lightbox photo={selectedPhoto} isOpen={lightbox.isOpen} onClose={lightbox.close} />
 
       {(isOverGrid || selectedPhoto !== null) && (
         <ViewfinderCursor x={cursorPosition.x} y={cursorPosition.y} accentColor={ACCENT_COLOR} />

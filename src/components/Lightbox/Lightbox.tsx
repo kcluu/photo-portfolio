@@ -4,13 +4,10 @@ import "./Lightbox.css";
 interface LightboxProps {
   photo: Photo | null;
   isOpen: boolean;
-  totalCount: number;
   onClose: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
 }
 
-export const Lightbox = ({ photo, isOpen, totalCount, onClose, onNext, onPrevious }: LightboxProps) => (
+export const Lightbox = ({ photo, isOpen, onClose }: LightboxProps) => (
   <>
     <div
       className="lightbox-scrim"
@@ -32,9 +29,7 @@ export const Lightbox = ({ photo, isOpen, totalCount, onClose, onNext, onPreviou
       )}
 
       <div className="lightbox-caption">
-        <div className="lightbox-meta">
-          FRAME {photo?.frame}
-        </div>
+        <div className="lightbox-meta">FRAME {photo?.frame}</div>
         <div className="lightbox-title">{photo?.caption}</div>
         {photo?.location && <div className="lightbox-location">{photo.location}</div>}
       </div>

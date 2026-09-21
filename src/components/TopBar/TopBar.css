@@ -112,7 +112,9 @@
   padding: 0;
   cursor: pointer;
   color: #c9c5ba;
-  transition: color 0.3s ease, filter 0.3s ease;
+  transition:
+    color 0.3s ease,
+    filter 0.3s ease;
 }
 
 .top-bar-light-switch-icon {

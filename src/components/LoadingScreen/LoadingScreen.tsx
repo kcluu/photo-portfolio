@@ -63,10 +63,7 @@ export const LoadingScreen = ({
     <div className={`loading-screen ${stage === "exit" ? "loading-screen-exit" : ""}`}>
       <div className="loading-screen-spinner">
         <div className="loading-screen-ring" />
-        <div
-          className="loading-screen-pulse"
-          style={{ backgroundColor: accentColor }}
-        />
+        <div className="loading-screen-pulse" style={{ backgroundColor: accentColor }} />
       </div>
 
       <div className="loading-screen-word-stack">

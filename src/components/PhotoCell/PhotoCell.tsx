@@ -10,14 +10,7 @@ interface PhotoCellProps {
   onSelect: () => void;
 }
 
-export const PhotoCell = ({
-  photo,
-  isDimmed,
-  isHighlighted,
-  onHoverStart,
-  onHoverEnd,
-  onSelect,
-}: PhotoCellProps) => (
+export const PhotoCell = ({ photo, isDimmed, isHighlighted, onHoverStart, onHoverEnd, onSelect }: PhotoCellProps) => (
   <div
     className={`photo-cell ${isDimmed ? "photo-cell-dimmed" : ""}`}
     onMouseEnter={onHoverStart}
@@ -32,8 +25,6 @@ export const PhotoCell = ({
       onContextMenu={(event) => event.preventDefault()}
     />
     <div className="photo-cell-grain" />
-    <div className={`photo-cell-frame ${isHighlighted ? "photo-cell-frame-visible" : ""}`}>
-      {photo.frame}
-    </div>
+    <div className={`photo-cell-frame ${isHighlighted ? "photo-cell-frame-visible" : ""}`}>{photo.frame}</div>
   </div>
 );

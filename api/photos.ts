@@ -36,7 +36,8 @@ interface ResourcesResponse {
 // Checks both plain "context" metadata and structured metadata fields,
 // since either could be how a value was set in the Cloudinary UI.
 const readField = (resource: CloudinaryResource, key: string): string | undefined => {
-  const context: Record<string, string> = resource.context?.custom ?? (resource.context as Record<string, string>) ?? {};
+  const context: Record<string, string> =
+    resource.context?.custom ?? (resource.context as Record<string, string>) ?? {};
   if (context[key]) return context[key];
 
   const field = resource.metadata?.find((entry) => entry.external_id === key || entry.label?.toLowerCase() === key);

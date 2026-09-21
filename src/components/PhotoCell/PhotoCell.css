@@ -4,7 +4,9 @@
   cursor: none;
   filter: none;
   opacity: 1;
-  transition: filter 0.35s ease, opacity 0.35s ease;
+  transition:
+    filter 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .photo-cell-dimmed {

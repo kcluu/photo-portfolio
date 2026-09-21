@@ -8,7 +8,6 @@ interface LightboxState {
   isOpen: boolean;
   open: (index: number) => void;
   close: () => void;
-  goTo: (index: number) => void;
   reset: () => void;
 }
 
@@ -32,10 +31,6 @@ export const useLightbox = (): LightboxState => {
     }, CLOSE_ANIMATION_MS);
   }, []);
 
-  const goTo = useCallback((index: number) => {
-    setSelectedIndex(index);
-  }, []);
-
   const reset = useCallback(() => {
     window.clearTimeout(closeTimerRef.current);
     setSelectedIndex(null);
@@ -47,7 +42,6 @@ export const useLightbox = (): LightboxState => {
     isOpen,
     open,
     close,
-    goTo,
     reset,
   };
 };
